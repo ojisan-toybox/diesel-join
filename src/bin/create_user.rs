@@ -15,13 +15,13 @@ fn main() {
     let name = name.trim_right(); // Remove the trailing newline
 
     println!(
-        "\nOk! Let's write {} (Press {} when finished)\n",
+        "\nOk! Let's write image {} (Press {} when finished)\n",
         name, EOF
     );
     stdin().read_to_string(&mut image).unwrap();
 
-    let post = create_user(&connection, name, &image);
-    println!("\nSaved draft {} with id {}", name, post.id);
+    let user = create_user(&connection, name, &image);
+    println!("\nSaved draft name {} image {} with id {}", user.name, user.image.unwrap(), user.id);
 }
 
 #[cfg(not(windows))]

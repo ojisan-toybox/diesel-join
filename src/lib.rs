@@ -40,15 +40,44 @@ pub fn create_user(conn: &PgConnection, name: &str, image: &str) -> User {
         .expect("Error saving new post")
 }
 
-pub fn find_post_by_uid(conn: &PgConnection, user_id: &i32) -> () {
+pub fn find_post_by_uid(conn: &PgConnection, user_id: &i32)->(){
     use schema::{posts, users};
 
     let data = users::table.inner_join(posts::table)
     .load::<(User, Post)>(conn)
     .expect("error");
+    println!("Displaying {} posts", data.len());
 
     for post in data {
         println!("{:?}", post.1.id);
     }
 }
 
+pub fn find_all_posts(conn: &PgConnection) -> () {
+    use schema::{posts};
+
+    let data = posts::table
+    .load::<Post>(conn)
+    .expect("error");
+
+    println!("Displaying {} posts", data.len());
+
+    for post in data {
+        println!("{:?}", post.id);
+        println!("{:?}", post.user_id);
+    }
+}
+
+pub fn find_all_users(conn: &PgConnection) -> () {
+    use schema::{users};
+
+    let data = users::table
+    .load::<User>(conn)
+    .expect("error");
+    println!("Displaying {} users", data.len());
+
+    for post in data {
+        println!("{:?}", post.id);
+        println!("{:?}", post.name);
+    }
+}
