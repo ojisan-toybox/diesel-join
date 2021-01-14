@@ -1,1 +1,1 @@
-alter table posts alter column user_id INT
+alter table posts alter column user_id SET NOT NULL

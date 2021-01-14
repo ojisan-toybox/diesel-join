@@ -4,7 +4,7 @@ table! {
         title -> Varchar,
         body -> Text,
         published -> Bool,
-        user_id -> Nullable<Int4>,
+        user_id -> Int4,
     }
 }
 

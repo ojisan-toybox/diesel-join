@@ -1,1 +1,1 @@
-alter table posts alter column user_id INT NOT NULL
+ALTER TABLE posts ALTER COLUMN user_id DROP NOT NULL;
