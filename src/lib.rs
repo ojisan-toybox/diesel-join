@@ -8,7 +8,6 @@ pub mod schema;
 use diesel::{connection, prelude::*, sql_types::Integer};
 use dotenv::dotenv;
 use std::env;
-
 use self::model::{NewPost, Post, NewUser, User};
 
 pub fn establish_connection() -> PgConnection {
@@ -44,9 +43,12 @@ pub fn create_user(conn: &PgConnection, name: &str, image: &str) -> User {
 pub fn find_post_by_uid(conn: &PgConnection, user_id: &i32) -> () {
     use schema::{posts, users};
 
-    let data = posts::table.inner_join(users::table)
-    .select((users::name, posts::title))
-    .load::<(Post, User)>(conn)
+    let data = users::table.inner_join(posts::table)
+    .load::<(User, Post)>(conn)
     .expect("error");
+
+    for post in data {
+        println!("{:?}", post.1.id);
+    }
 }
 

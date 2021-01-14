@@ -11,5 +11,5 @@ use self::diesel::prelude::*;
 fn main() {
 
     let connection = establish_connection();
-    find_post_by_uid(&connection, &1)
+    let data =find_post_by_uid(&connection, &1);
  }
