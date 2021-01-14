@@ -5,7 +5,7 @@ extern crate dotenv;
 pub mod model;
 pub mod schema;
 
-use diesel::prelude::*;
+use diesel::{connection, prelude::*, sql_types::Integer};
 use dotenv::dotenv;
 use std::env;
 
@@ -40,3 +40,13 @@ pub fn create_user(conn: &PgConnection, name: &str, image: &str) -> User {
         .get_result(conn)
         .expect("Error saving new post")
 }
+
+pub fn find_post_by_uid(conn: &PgConnection, user_id: &i32) -> () {
+    use schema::{posts, users};
+
+    let data = posts::table.inner_join(users::table)
+    .select((users::name, posts::title))
+    .load::<(Post, User)>(conn)
+    .expect("error");
+}
+
