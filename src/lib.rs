@@ -81,3 +81,11 @@ pub fn find_all_users(conn: &PgConnection) -> () {
         println!("{:?}", post.name);
     }
 }
+
+
+pub fn delete_by(conn: &PgConnection, pid: &i32)->(){
+    use schema::posts::dsl::*;
+    let num_deleted = diesel::delete(posts.filter(id.eq(pid)))
+        .execute(conn)
+        .expect("Error deleting posts");
+}
